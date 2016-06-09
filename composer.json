@@ -1,0 +1,24 @@
+{
+    "name": "easy-system/es-events",
+    "description": "Easy System Events",
+    "authors": [
+        {
+            "name": "Damon Smith",
+            "email": "damon.easy.system@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^5.5 || ^7.0",
+        "easy-system/es-component": "*",
+        "easy-system/es-services": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Es\\Events\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { "Es\\Events\\Test\\": "test/" }
+    },
+    "minimum-stability": "dev"
+}
