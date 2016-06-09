@@ -9,6 +9,7 @@ For a system with large number of components and modules the search of code that
 led to a particular result can be fairly complex.
 
 In this regard, there are two significant limitations to operate with events:
+
 1. As an event listener, possible to use only those listeners that are registered 
    in the system Service Locator.
 2. The registration of listeners should be performed only with configuration 
