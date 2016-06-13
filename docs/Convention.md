@@ -10,13 +10,12 @@ led to a particular result can be fairly complex.
 
 In this regard, there are two significant limitations to operate with events:
 
-1. As an event listener, possible to use only those listeners that are registered 
-   in the system Service Locator.
-2. The registration of listeners should be performed only with configuration 
-   files.
+1. All event listeners must be registered in `Es\Events\Listeners`.
+2. The registration of events and listeners should be performed only with 
+   configuration files.
 
-The system itself must provide the code, that performs event configuration using
-the configuration files. The user code must only provide the necessary
-configuration files.
+The system itself must provide the code, that performs configuration of events 
+and listeners using the configuration files. The user code must only provide the
+necessary configuration files.
 
 In addition, these limitations make it possible to cache all registered events.
