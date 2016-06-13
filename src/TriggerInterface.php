@@ -15,6 +15,20 @@ namespace Es\Events;
 interface TriggerInterface extends \Serializable
 {
     /**
+     * Sets the listeners.
+     *
+     * @param ListenersInterface $listeners The listeners
+     */
+    public static function setListeners(ListenersInterface $listeners);
+
+    /**
+     * Gets the listeners.
+     *
+     * @return ListenersInterface The listeners
+     */
+    public static function getListeners();
+
+    /**
      * Sets the listener name.
      *
      * @param string $name The listener name

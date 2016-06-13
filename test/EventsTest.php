@@ -10,21 +10,26 @@
 namespace Es\Events\Test;
 
 use Es\Events\Events;
+use Es\Events\Listeners;
 use Es\Events\Test\FakeEvents\AnimalEvent;
 use Es\Events\Test\FakeEvents\MammalEvent;
 use Es\Events\Test\FakeEvents\TigerEvent;
 use Es\Events\Trigger;
 use Es\Services\Provider;
+use Es\Services\Services;
 
 class EventsTest extends \PHPUnit_Framework_TestCase
 {
+    protected $listeners;
+
     public function setUp()
     {
         $f = function ($event) {
             $event->setResult('processed', true);
         };
-        $services = Provider::getServices();
-        $services->set('EventsTest', $f);
+        $listeners = $this->buildListeners();
+        $listeners->set('EventsTest', $f);
+        $this->listeners = $listeners;
 
         $fakeEventsDir = __DIR__
                        . DIRECTORY_SEPARATOR
@@ -184,8 +189,8 @@ class EventsTest extends \PHPUnit_Framework_TestCase
         $bar = function ($event) { $event->setResult('bar'); };
         $baz = function ($event) { $event->setResult('baz'); };
         $bat = function ($event) { $event->setResult('bat'); };
-        $services = Provider::getServices();
-        $services->set('foo', $foo)->set('bar', $bar)->set('baz', $baz)->set('bat', $bat);
+        $listeners = $this->listeners;
+        $listeners->set('foo', $foo)->set('bar', $bar)->set('baz', $baz)->set('bat', $bat);
         $config = [
             ['Test.Event', 'foo', '__invoke', 1],
             ['Test.Event', 'bar', '__invoke', 3],
@@ -210,8 +215,8 @@ class EventsTest extends \PHPUnit_Framework_TestCase
         $bar = function ($event) { $event->setResult('bar'); $event->stopPropagation(); };
         $baz = function ($event) { $event->setResult('baz'); };
         $bat = function ($event) { $event->setResult('bat'); };
-        $services = Provider::getServices();
-        $services->set('foo', $foo)->set('bar', $bar)->set('baz', $baz)->set('bat', $bat);
+        $listeners = $this->listeners;
+        $listeners->set('foo', $foo)->set('bar', $bar)->set('baz', $baz)->set('bat', $bat);
         $config = [
             ['Test.Event', 'foo', '__invoke', 4],
             ['Test.Event', 'bar', '__invoke', 3],
@@ -224,5 +229,16 @@ class EventsTest extends \PHPUnit_Framework_TestCase
         $event   = $events('Test.Event');
         $results = $event->getResults();
         $this->assertTrue(count($results) == 2);
+    }
+
+    protected function buildListeners()
+    {
+        $listeners = new Listeners();
+        $services  = new Services();
+        $services->set('Listeners', $listeners);
+        Provider::setServices($services);
+        Trigger::setListeners($listeners);
+
+        return $listeners;
     }
 }

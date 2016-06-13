@@ -10,6 +10,7 @@
     "require": {
         "php": "^5.5 || ^7.0",
         "easy-system/es-component": "*",
+        "easy-system/es-exception": "*",
         "easy-system/es-services": "*"
     },
     "autoload": {

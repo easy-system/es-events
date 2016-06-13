@@ -9,7 +9,7 @@
  */
 namespace Es\Events;
 
-use Es\Services\ServicesTrait;
+use Es\Services\Provider;
 use RuntimeException;
 
 /**
@@ -17,7 +17,12 @@ use RuntimeException;
  */
 class Trigger implements TriggerInterface
 {
-    use ServicesTrait;
+    /**
+     * The listeners.
+     *
+     * @var ListenersInterface
+     */
+    protected static $listeners;
 
     /**
      * The listener name.
@@ -32,6 +37,32 @@ class Trigger implements TriggerInterface
      * @var string
      */
     protected $method = '';
+
+    /**
+     * Sets the listeners.
+     *
+     * @param ListenersInterface $listeners The listeners
+     */
+    public static function setListeners(ListenersInterface $listeners)
+    {
+        static::$listeners = $listeners;
+    }
+
+    /**
+     * Gets the listeners.
+     *
+     * @return ListenersInterface The listeners
+     */
+    public static function getListeners()
+    {
+        if (! static::$listeners) {
+            $services  = Provider::getServices();
+            $listeners = $services->get('Listeners');
+            static::setListeners($listeners);
+        }
+
+        return static::$listeners;
+    }
 
     /**
      * Constructor.
@@ -102,8 +133,8 @@ class Trigger implements TriggerInterface
      */
     public function __invoke(EventInterface $event)
     {
-        $services = $this->getServices();
-        $listener = $services->get($this->listener);
+        $listeners = static::getListeners();
+        $listener  = $listeners->get($this->listener);
         if (! is_callable([$listener, $this->method])) {
             throw new RuntimeException(
                 sprintf(
