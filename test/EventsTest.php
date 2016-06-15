@@ -237,7 +237,6 @@ class EventsTest extends \PHPUnit_Framework_TestCase
         $services  = new Services();
         $services->set('Listeners', $listeners);
         Provider::setServices($services);
-        Trigger::setListeners($listeners);
 
         return $listeners;
     }
