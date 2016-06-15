@@ -17,21 +17,19 @@ use Es\Services\Services;
 
 class TriggerTest extends \PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        require_once 'TriggerTestHelper.php';
-    }
-
     public function testSetListeners()
     {
+        $services = new Services();
+        Provider::setServices($services);
+
         $listeners = new Listeners();
-        Trigger::setListeners($listeners);
-        $this->assertSame($listeners, Trigger::getListeners());
+        $trigger   = new Trigger('', '');
+        $trigger->setListeners($listeners);
+        $this->assertSame($listeners, $services->get('Listeners'));
     }
 
     public function testGetListeners()
     {
-        TriggerTestHelper::resetListeners();
         $listeners = new Listeners();
         $services  = new Services();
         $services->set('Listeners', $listeners);

@@ -19,14 +19,14 @@ interface TriggerInterface extends \Serializable
      *
      * @param ListenersInterface $listeners The listeners
      */
-    public static function setListeners(ListenersInterface $listeners);
+    public function setListeners(ListenersInterface $listeners);
 
     /**
      * Gets the listeners.
      *
      * @return ListenersInterface The listeners
      */
-    public static function getListeners();
+    public function getListeners();
 
     /**
      * Sets the listener name.

@@ -9,7 +9,6 @@
  */
 namespace Es\Events;
 
-use Es\Services\Provider;
 use RuntimeException;
 
 /**
@@ -17,12 +16,7 @@ use RuntimeException;
  */
 class Trigger implements TriggerInterface
 {
-    /**
-     * The listeners.
-     *
-     * @var ListenersInterface
-     */
-    protected static $listeners;
+    use ListenersTrait;
 
     /**
      * The listener name.
@@ -37,32 +31,6 @@ class Trigger implements TriggerInterface
      * @var string
      */
     protected $method = '';
-
-    /**
-     * Sets the listeners.
-     *
-     * @param ListenersInterface $listeners The listeners
-     */
-    public static function setListeners(ListenersInterface $listeners)
-    {
-        static::$listeners = $listeners;
-    }
-
-    /**
-     * Gets the listeners.
-     *
-     * @return ListenersInterface The listeners
-     */
-    public static function getListeners()
-    {
-        if (! static::$listeners) {
-            $services  = Provider::getServices();
-            $listeners = $services->get('Listeners');
-            static::setListeners($listeners);
-        }
-
-        return static::$listeners;
-    }
 
     /**
      * Constructor.
