@@ -76,9 +76,9 @@ class TriggerTest extends \PHPUnit_Framework_TestCase
         };
         $listeners = new Listeners();
         $listeners->set('TriggerTest', $f);
-        Trigger::setListeners($listeners);
 
         $trigger = new Trigger('TriggerTest', '__invoke');
+        $trigger->setListeners($listeners);
         $event   = new Event();
         $trigger($event);
         $this->assertTrue($event->getResult('trigger'));
@@ -93,9 +93,9 @@ class TriggerTest extends \PHPUnit_Framework_TestCase
     {
         $listeners = new Listeners();
         $listeners->set('TriggerTest', $this);
-        Trigger::setListeners($listeners);
 
         $trigger = new Trigger('TriggerTest', 'bar');
+        $trigger->setListeners($listeners);
         $event   = new Event();
         $this->setExpectedException('\RuntimeException');
         $trigger($event);
