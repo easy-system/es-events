@@ -12,7 +12,7 @@ namespace Es\Events;
 use Es\Services\Provider;
 
 /**
- * The recommended way to interact with listeners.
+ * The accessors of Listeners.
  */
 trait ListenersTrait
 {

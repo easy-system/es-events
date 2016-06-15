@@ -12,7 +12,7 @@ namespace Es\Events;
 use Es\Services\Provider;
 
 /**
- * The recommended way to interact with events.
+ * The accessors of Events.
  */
 trait EventsTrait
 {
