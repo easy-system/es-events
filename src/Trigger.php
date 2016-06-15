@@ -101,7 +101,7 @@ class Trigger implements TriggerInterface
      */
     public function __invoke(EventInterface $event)
     {
-        $listeners = static::getListeners();
+        $listeners = $this->getListeners();
         $listener  = $listeners->get($this->listener);
         if (! is_callable([$listener, $this->method])) {
             throw new RuntimeException(
